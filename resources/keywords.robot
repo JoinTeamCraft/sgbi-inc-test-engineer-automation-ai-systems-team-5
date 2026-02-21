@@ -3,7 +3,6 @@ Documentation     Template for reusable keywords
 Library           SeleniumLibrary
 Library           String
 Resource          locators.robot
-Library    config.env_config.EnvConfig
 
 
 
@@ -51,3 +50,24 @@ Wait For Page To Load Completely
     ${timeout}=    Get Config Value    MEDIUM_TIMEOUT
     ${retry_count}=    Get Config Value    RETRY_COUNT
     Wait Until Keyword Succeeds    ${retry_count}    ${timeout}    Page Should Be Ready
+
+
+Valid Login Test
+    Open Browser    ${URL}    ${BROWSER}
+    Maximize Browser Window
+    Set Selenium Implicit Wait    10s
+    Wait Until Element Is Visible    ${txtEmailId}    5s
+    Input Text    ${txtEmailId}    ${USERNAME}
+    Click Button    ${btnContinueemail} 
+    Wait Until Element Is Visible    ${txtPass}    2s
+    Input Text    ${txtPass}    ${PASSWORD}
+    Click Button    ${btnPassContinue} 
+    Wait Until Element Is Visible    ${txtOtp}    2s
+    Input Text    ${txtOtp}    ${OTP}
+    # Click Button    ${btnotpContinue}
+    Sleep   10s
+    ${welcomeTest}=    Get Text    ${txtWelcome}
+    Log to console    ${welcomeTest}
+    Should Be Equal    ${welcomeTest}    ${WELCOMENOTE}
+    Sleep  10s
+       
