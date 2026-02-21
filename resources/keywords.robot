@@ -53,6 +53,7 @@ Wait For Page To Load Completely
 
 
 Valid Login Test
+    
     Open Browser    ${URL}    ${BROWSER}
     Maximize Browser Window
     Set Selenium Implicit Wait    10s
@@ -69,5 +70,23 @@ Valid Login Test
     ${welcomeTest}=    Get Text    ${txtWelcome}
     Log to console    ${welcomeTest}
     Should Be Equal    ${welcomeTest}    ${WELCOMENOTE}
-    Sleep  10s
-       
+    Sleep  5s
+InValid Login Test       
+    Open Browser    ${URL}    ${BROWSER}
+    Maximize Browser Window
+    Set Selenium Implicit Wait    10s
+    Wait Until Element Is Visible    ${txtEmailId}    5s
+    Input Text    ${txtEmailId}    ${INVALIDUSERNAME}
+    Click Button    ${btnContinueemail} 
+    
+    Sleep   5s
+    ${errorMsg}=    Get Text        ${invalidEmailIdErrorMsg}
+    Log to console    ${errorMsg}
+    Should Be Equal    ${errorMsg}    ${INVALIDEMAILID}
+    Sleep  5s
+Logout Test    
+    Wait Until Element Is Visible    ${signOutIcon}    5s    
+    Click Button    ${signOutIcon} 
+    Wait Until Element Is Visible    ${signout}    2s
+    Click Button    ${signout} 
+    Sleep  5s

@@ -12,3 +12,8 @@ Resource          ../../resources/locators.robot
 
 Verify Login with Valid Credentials
     Valid Login Test    
+Verify Login with Invalid Credentials    
+    InValid Login Test 
+Verify Logout Functionality
+    Valid Login Test
+    Logout Test    
