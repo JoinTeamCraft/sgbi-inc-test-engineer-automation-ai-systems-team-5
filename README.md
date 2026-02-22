@@ -1,29 +1,21 @@
-# Robot Framework Python Automation Template
+# MoRent Automation - Test Engineer Assessment
 
-This is a clean template for a Robot Framework project with Python extensions.
+## Project Overview
+This project contains automated smoke tests for the **MoRent** car rental platform. The current focus is on verifying the landing page header visibility and the functional navigation flow for user registration.
 
-## Structure
+## Tools Used
+* **Robot Framework:** Core automation framework.
+* **SeleniumLibrary:** For web browser interaction.
+* **Python:** Underlying programming language.
+* **Chrome Browser:** Target testing environment.
 
-- **tests/**: Directory for test suites (organized by module).
-- **resources/**: Directory for Robot keywords and locators.
-- **python_lib/**: Directory for custom Python libraries.
-- **config/**: Directory for configuration files.
-- **results/**: Directory for test results.
+## Project Setup Steps
+1. **Clone the repository:** `git clone <your-fork-url>`
+2. **Install dependencies:**
+   `pip install robotframework seleniumlibrary`
+3. **Webdriver:** Ensure the Chrome browser is installed. The `webdriver-manager` or a compatible `chromedriver` should be in your system path.
 
-## Usage
-
-1. **Install Dependencies**:
-
-   ```bash
-   pip install robotframework robotframework-seleniumlibrary
-   ```
-
-2. **Implement Logic**:
-   - Add locators to `resources/locators.robot`.
-   - Add keywords to `resources/keywords.robot`.
-   - Implement Python logic in `python_lib/`.
-
-3. **Run Tests**:
-   ```bash
-   robot --outputdir results tests/
-   ```
+## How to Run Tests
+To execute the smoke tests, run the following command from the project root:
+```bash
+robot tests/smoke/verify_launch.robot
