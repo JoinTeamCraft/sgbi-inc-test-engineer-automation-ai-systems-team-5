@@ -18,3 +18,12 @@ ${FAVORITE_LINK}    xpath=//a[contains(@href,'/favourites')]//button[@aria-label
 ${ORDERS_LINK}    xpath=//a[contains(@href,'/orders')]//button[@aria-label='Notification Icon']
 ${USER_SETTINGS_BUTTON}    xpath=//button[@aria-label='User Settings']
 ${SIGN_IN_BUTTON}    xpath=//div[contains(@class,'user-sign')]
+
+#Car Search Locators
+${PICKUP_LOCATION}     xpath=//input[@id='rc_select_1']/ancestor::div[contains(@class, 'ant-select-selector')]
+${DROPOFF_LOCATION}    xpath=//input[@id='rc_select_2']/ancestor::div[contains(@class, 'ant-select-selector')]
+${PICKUP_DATE}        xpath=(//div[contains(@class,'ant-picker-input')]/input[@placeholder='Select date'])[1]
+${DROPOFF_DATE}       xpath=(//div[contains(@class,'ant-picker-input')]/input[@placeholder='Select date'])[2]
+${PICKUP_TIME}        xpath=(//div[contains(@class,'ant-picker-input')]/input[@placeholder='Select time'])[1]
+${DROPOFF_TIME}       xpath=(//div[contains(@class,'ant-picker-input')]/input[@placeholder='Select time'])[2]
+${ERROR_MESSAGE}      xpath=//div[contains(text(),'Pickup Date and Dropoff Date is mandatory')]
