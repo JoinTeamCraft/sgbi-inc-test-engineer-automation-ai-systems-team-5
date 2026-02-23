@@ -163,3 +163,76 @@ Clear Registration Form Fields
     Clear Element Text    ${REGISTRATION_LAST_NAME_FIELD}
     Clear Element Text    ${REGISTRATION_EMAIL_FIELD}
     Clear Element Text    ${REGISTRATION_PASSWORD_FIELD}
+
+Generate Dynamic Valid Email
+    [Documentation]    Generate a dynamic valid email address using a random string and a predefined domain.
+    ${email_domain}=    Get Config Value    VALID_EMAIL_DOMAIN
+    ${rand}=    Generate Random String    4    [LETTERS]
+    ${email}=    Set Variable    ${rand.lower()}${email_domain}
+    RETURN    ${email}
+
+Verify Email Validation Message Displayed
+    [Documentation]    Verify that the appropriate validation message is displayed when an invalid email format is submitted in the Registration form.
+    ${email_validation}=    Get Element Attribute    ${REGISTRATION_EMAIL_FIELD}    validationMessage
+    Should Not Be Empty    ${email_validation}
+    ${sign_up_invalid_email}=    Get Config Value    SIGN_UP_PAGE_INVALID_EMAIL_SCREENSHOT
+    ${screenshot_name}=    Replace String    ${TEST NAME}    ${SPACE}    _
+    Capture Page Screenshot    ${screenshot_name}_${sign_up_invalid_email}
+
+Verify Password Validation Message Displayed
+    [Documentation]    Verify that the appropriate validation message is displayed when an invalid password format is submitted in the Registration form.
+    ${timeout}=    Get Config Value    LONG_TIMEOUT
+    ${expected_message}=    Get Config Value    PASSWORD_MIN_LENGTH_MESSAGE
+    Wait Until Element Is Visible    ${PASSWORD_ERROR_MESSAGE_LOCATOR}    ${timeout}
+    ${password_error}=    Get Text    ${PASSWORD_ERROR_MESSAGE_LOCATOR}
+    Log    ${password_error}
+    Should Be Equal    ${password_error}    ${expected_message}
+    ${sign_up_invalid_password}=    Get Config Value    SIGN_UP_PAGE_INVALID_PASSWORD_SCREENSHOT
+    ${screenshot_name}=    Replace String    ${TEST NAME}    ${SPACE}    _
+    Capture Page Screenshot    ${screenshot_name}_${sign_up_invalid_password}
+
+Verify User Remains On Registration Page
+    [Documentation]    Verify that the user remains on the Registration page after attempting to submit invalid data by checking for the presence of the Registration form.
+    ${timeout}=    Get Config Value    LONG_TIMEOUT
+    Wait Until Element Is Visible    ${REGISTRATION_FORM}    ${timeout}
+    ${sign_up_text}=    Get Config Value    SIGN_UP_PAGE_TEXT
+    Wait Until Page Contains    ${sign_up_text}    ${timeout}
+
+Fill And Submit Registration Form
+    [Documentation]    Fill in the Registration form with provided details and submit it by clicking the Continue button.]
+    [Arguments]    ${first_name}    ${last_name}    ${email}    ${password}
+    ${retry_count}=    Get Config Value    RETRY_COUNT
+    ${time_out}=    Get Config Value    MEDIUM_TIMEOUT
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_FIRSTNAME_FIELD}    ${first_name}
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_LASTNAME_FIELD}     ${last_name}
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_EMAIL_FIELD}        ${email}
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_PASSWORD_FIELD}     ${password}
+    Click Element    ${REGISTRATION_CONTINUE_BUTTON}
+
+Submit Registration Form With Invalid Email
+    [Documentation]    Submit registration with invalid email and verify validation is triggered.
+
+    ${first_name}=        Get Config Value    VALID_FIRST_NAME
+    ${last_name}=         Get Config Value    VALID_LAST_NAME
+    ${invalid_email}=     Get Config Value    INVALID_EMAIL
+    ${valid_password}=    Get Config Value    VALID_PASSWORD
+
+    Fill And Submit Registration Form
+    ...    ${first_name}
+    ...    ${last_name}
+    ...    ${invalid_email}
+    ...    ${valid_password}
+
+Submit Registration Form With Invalid Password
+    [Documentation]    Submit registration with invalid password and verify validation is triggered.
+
+    ${first_name}=          Get Config Value    VALID_FIRST_NAME
+    ${last_name}=           Get Config Value    VALID_LAST_NAME
+    ${valid_email}=         Generate Dynamic Valid Email
+    ${invalid_password}=    Get Config Value    INVALID_PASSWORD
+
+    Fill And Submit Registration Form
+    ...    ${first_name}
+    ...    ${last_name}
+    ...    ${valid_email}
+    ...    ${invalid_password}
