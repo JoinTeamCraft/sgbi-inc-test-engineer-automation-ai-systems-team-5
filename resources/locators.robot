@@ -11,6 +11,7 @@ ${HOME_SEARCH_BUTTON}    xpath=//button/span[text()='Search']
 ${HOME_PAGE_LOGO}    xpath=//a/span[text()='MORENT']
 ${HOME_PAGE_MAIN_CONTAINER}    xpath=//main[contains(@class,'container')]
 ${HOME_PAGE_SEARCH_BAR}    xpath=//input[@type='search' and @placeholder='Search something here']
+${USER_PROFILE_ICON}    xpath=//div[contains(@class,'cl-userButton')]
 
 # Header Locators
 ${HEADER_SECTION}    xpath=//header[contains(@class,'header')]
@@ -32,3 +33,4 @@ ${REGISTRATION_CONTINUE_BUTTON}    xpath=//button[contains(@class,'formButton')]
 
 # Validation Message Locators
 ${PASSWORD_ERROR_MESSAGE_LOCATOR}    xpath=//*[@id='error-password']
+${FORM_FEEDBACK_ERROR}    xpath=//*[@data-testid="form-feedback-error"]

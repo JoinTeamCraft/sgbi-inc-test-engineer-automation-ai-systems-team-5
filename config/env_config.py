@@ -14,6 +14,7 @@ class EnvConfig:
     MEDIUM_TIMEOUT = 15
     LONG_TIMEOUT = 20
     RETRY_COUNT = "3x"
+    VERY_LONG_TIMEOUT = 120
 
     # Test Data
     PAGE_NOT_FOUND_CODE = "404"
@@ -29,12 +30,14 @@ class EnvConfig:
     SIGN_UP_PAGE_MANDATORY_VALIDATION_SCREENSHOT = "Sign_Up_Page_Mandatory_Validation.png"
     VALID_FIRST_NAME = "John"
     VALID_LAST_NAME = "Doe"
-    VALID_EMAIL_DOMAIN = "@example.com"
+    VALID_EMAIL_DOMAIN = "+clerk_test@example.com"
     INVALID_EMAIL = "user@domain"
     INVALID_PASSWORD = "123"
     PASSWORD_MIN_LENGTH_MESSAGE = "Your password must contain 8 or more characters."
     SIGN_UP_PAGE_INVALID_EMAIL_SCREENSHOT = "Sign_Up_Page_Invalid_Email.png"
     SIGN_UP_PAGE_INVALID_PASSWORD_SCREENSHOT = "Sign_Up_Page_Invalid_Password.png"
+    OTP_VERIFICATION_PAGE_TEXT = "Verify your email"
+    REGISTRATION_SUCCESS_INDICATOR = "Success"
 
     # Navigation Config
     FAVORITES_PATH = "favourites"
