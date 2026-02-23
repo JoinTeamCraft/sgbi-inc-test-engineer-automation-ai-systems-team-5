@@ -4,7 +4,9 @@ Documentation     SG-19: Automate car search form verification on the MoRent Hom
 ...               pickup-only search (negative), and full pickup+dropoff search (positive).
 Resource          ../../resources/keywords.robot
 Resource          ../../resources/locators.robot
+Library           python_lib.date_utils.DateUtils
 Test Teardown     Close All Browsers
+
 
 
 *** Test Cases ***
@@ -23,9 +25,14 @@ SG-19 Verify Car Search Form And Search Functionality
     ...                  Full search redirects to /rental-cars.
     [Tags]    smoke    car_search
 
+    # ── Generate dynamic future dates ──────────────────────────────
+    ${pickup_day}=     Get Future Day    days_ahead=3
+    ${dropoff_day}=    Get Future Day    days_ahead=6
+
     # ── Open application ──────────────────────────────────────────
     Open MoRent Application
     Wait For Page To Load Completely
+
 
     # ── Step 1: Verify all 6 search fields are visible ────────────
     Log    STEP 1: Verifying all 6 fields are visible    console=True
@@ -47,7 +54,7 @@ SG-19 Verify Car Search Form And Search Functionality
     # ── Step 3: Negative – only Pickup details, no Dropoff ─────────
     Log    STEP 3: Negative - selecting only Pickup and searching    console=True
     Select Pickup Location    Ernakulam
-    Select Pickup Date        25
+    Select Pickup Date        ${pickup_day}
     Select Pickup Time        10
     Click Search Button
     ${timeout}=    Get Config Value    LONG_TIMEOUT
@@ -62,10 +69,10 @@ SG-19 Verify Car Search Form And Search Functionality
     Go To    ${url}
     Wait For Page To Load Completely
     Select Pickup Location    Ernakulam
-    Select Pickup Date        25
+    Select Pickup Date        ${pickup_day}
     Select Pickup Time        10
     Select Dropoff Location   Trivandrum
-    Select Dropoff Date       28
+    Select Dropoff Date       ${dropoff_day}
     Select Dropoff Time       10
     Capture Page Screenshot    step4_before_search.png
     Click Search Button

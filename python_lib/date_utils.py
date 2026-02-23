@@ -2,6 +2,12 @@ from robot.api.deco import library, keyword
 from SeleniumLibrary import SeleniumLibrary
 from robot.libraries.BuiltIn import BuiltIn
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    ElementNotInteractableException,
+    ElementClickInterceptedException,
+    StaleElementReferenceException,
+)
 from datetime import datetime, timedelta
 import time
 
@@ -13,13 +19,15 @@ class DateUtils:
     Ant Design (React) date/time/location picker components via JavaScript.
     """
 
+    @keyword
     def get_future_date(self, days_ahead=7):
         """Returns a future date string in YYYY-MM-DD format."""
         future = datetime.now() + timedelta(days=days_ahead)
         return future.strftime("%Y-%m-%d")
 
+    @keyword
     def get_future_day(self, days_ahead=7):
-        """Returns just the day number of a future date as a zero-padded string."""
+        """Returns just the day number of a future date as a string (e.g. '26')."""
         future = datetime.now() + timedelta(days=days_ahead)
         return str(future.day)
 
@@ -50,7 +58,8 @@ class DateUtils:
                 actions = ActionChains(driver)
                 actions.move_to_element(element).click().perform()
                 return True
-            except Exception:
+            except (NoSuchElementException, ElementNotInteractableException,
+                    ElementClickInterceptedException, StaleElementReferenceException):
                 time.sleep(0.5)
         raise Exception(
             f"Failed to action-click element with xpath: {xpath}"
@@ -88,7 +97,8 @@ class DateUtils:
                 # Fallback: pure JS click
                 driver.execute_script("arguments[0].click();", element)
                 return True
-            except Exception:
+            except (NoSuchElementException, ElementNotInteractableException,
+                    ElementClickInterceptedException, StaleElementReferenceException):
                 time.sleep(0.5)
 
         raise Exception(
