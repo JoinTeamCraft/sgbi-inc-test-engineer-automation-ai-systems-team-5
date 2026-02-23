@@ -29,3 +29,6 @@ ${REGISTRATION_LAST_NAME_FIELD}    xpath=//input[@name='lastName']
 ${REGISTRATION_EMAIL_FIELD}    xpath=//input[@name='emailAddress']
 ${REGISTRATION_PASSWORD_FIELD}    xpath=//input[@name='password']
 ${REGISTRATION_CONTINUE_BUTTON}    xpath=//button[contains(@class,'formButton')]/span[text()='Continue']
+
+# Validation Message Locators
+${PASSWORD_ERROR_MESSAGE_LOCATOR}    xpath=//*[@id='error-password']
