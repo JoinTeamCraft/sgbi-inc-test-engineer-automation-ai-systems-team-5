@@ -236,3 +236,39 @@ Submit Registration Form With Invalid Password
     ...    ${last_name}
     ...    ${valid_email}
     ...    ${invalid_password}
+
+Submit Registration Form With Valid Data
+    [Documentation]    Fill registration form using valid inputs and submit.
+
+    ${first_name}=        Get Config Value    VALID_FIRST_NAME
+    ${last_name}=         Get Config Value    VALID_LAST_NAME
+    ${valid_email}=       Generate Dynamic Valid Email
+    ${valid_password}=    Get Config Value    VALID_PASSWORD
+
+    Fill And Submit Registration Form
+    ...    ${first_name}
+    ...    ${last_name}
+    ...    ${valid_email}
+    ...    ${valid_password}
+
+Verify OTP verification Page Is Displayed
+    [Documentation]    Verify that the OTP verification page is displayed after submitting the registration form with valid data.
+    ${timeout}=    Get Config Value    VERY_LONG_TIMEOUT
+    ${otp_page_text}=    Get Config Value    OTP_VERIFICATION_PAGE_TEXT
+    Wait Until Page Contains    ${otp_page_text}    ${timeout}
+
+Wait For Registration Success Indicator
+    [Documentation]    Wait for the registration success indicator to be visible after completing the OTP verification step.
+    ${timeout}=    Get Config Value    LONG_TIMEOUT
+    ${success_indicator}=    Get Config Value    REGISTRATION_SUCCESS_INDICATOR
+    Wait Until Page Contains    ${success_indicator}    ${timeout}
+
+Verify No Validation Errors Displayed
+    [Documentation]    Verify that no validation error messages are displayed.
+    Page Should Not Contain Element    ${FORM_FEEDBACK_ERROR}
+
+Verify User Redirected After Successful Registration
+    [Documentation]    Verify user is redirected to Home page after successful registration.
+    ${timeout}=    Get Config Value    LONG_TIMEOUT
+    Wait Until Element Is Visible    ${HOME_PAGE_LOGO}    ${timeout}
+    Wait Until Element Is Visible    ${USER_PROFILE_ICON}    ${timeout}
