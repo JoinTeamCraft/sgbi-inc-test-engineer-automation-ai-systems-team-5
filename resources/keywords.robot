@@ -198,30 +198,41 @@ Verify User Remains On Registration Page
     ${sign_up_text}=    Get Config Value    SIGN_UP_PAGE_TEXT
     Wait Until Page Contains    ${sign_up_text}    ${timeout}
 
-Submit Registration Form With Invalid Email
-    [Documentation]    Fill the Registration form with valid first name, last name, and password but an invalid email format, then attempt to submit the form and trigger validation.
+Fill And Submit Registration Form
+    [Documentation]    Fill in the Registration form with provided details and submit it by clicking the Continue button.]
+    [Arguments]    ${first_name}    ${last_name}    ${email}    ${password}
     ${retry_count}=    Get Config Value    RETRY_COUNT
     ${time_out}=    Get Config Value    MEDIUM_TIMEOUT
-    ${first_name}=    Get Config Value    VALID_FIRST_NAME
-    ${last_name}=    Get Config Value    VALID_LAST_NAME
-    ${invalid_email}=    Get Config Value    INVALID_EMAIL
-    ${valid_password}=    Get Config Value    VALID_PASSWORD
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_FIRST_NAME_FIELD}    ${first_name}
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_LAST_NAME_FIELD}     ${last_name}
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_EMAIL_FIELD}    ${invalid_email}
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_PASSWORD_FIELD}    ${valid_password}
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_FIRSTNAME_FIELD}    ${first_name}
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_LASTNAME_FIELD}     ${last_name}
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_EMAIL_FIELD}        ${email}
+    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_PASSWORD_FIELD}     ${password}
     Click Element    ${REGISTRATION_CONTINUE_BUTTON}
 
+Submit Registration Form With Invalid Email
+    [Documentation]    Submit registration with invalid email and verify validation is triggered.
+
+    ${first_name}=        Get Config Value    VALID_FIRST_NAME
+    ${last_name}=         Get Config Value    VALID_LAST_NAME
+    ${invalid_email}=     Get Config Value    INVALID_EMAIL
+    ${valid_password}=    Get Config Value    VALID_PASSWORD
+
+    Fill And Submit Registration Form
+    ...    ${first_name}
+    ...    ${last_name}
+    ...    ${invalid_email}
+    ...    ${valid_password}
+
 Submit Registration Form With Invalid Password
-    [Documentation]    Fill the Registration form with valid first name, last name, and email but an invalid password format, then attempt to submit the form and trigger validation.
-    ${retry_count}=    Get Config Value    RETRY_COUNT
-    ${time_out}=    Get Config Value    MEDIUM_TIMEOUT
-    ${first_name}=    Get Config Value    VALID_FIRST_NAME
-    ${last_name}=    Get Config Value    VALID_LAST_NAME
-    ${valid_email}=    Generate Dynamic Valid Email
+    [Documentation]    Submit registration with invalid password and verify validation is triggered.
+
+    ${first_name}=          Get Config Value    VALID_FIRST_NAME
+    ${last_name}=           Get Config Value    VALID_LAST_NAME
+    ${valid_email}=         Generate Dynamic Valid Email
     ${invalid_password}=    Get Config Value    INVALID_PASSWORD
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_FIRST_NAME_FIELD}    ${first_name}
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_LAST_NAME_FIELD}     ${last_name}
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_EMAIL_FIELD}         ${valid_email}
-    Wait Until Keyword Succeeds    ${retry_count}    ${time_out}    Input Text    ${REGISTRATION_PASSWORD_FIELD}      ${invalid_password}
-    Click Element    ${REGISTRATION_CONTINUE_BUTTON}
+
+    Fill And Submit Registration Form
+    ...    ${first_name}
+    ...    ${last_name}
+    ...    ${valid_email}
+    ...    ${invalid_password}
